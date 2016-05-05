@@ -67,6 +67,7 @@ describe 'selinux::module', :type => :define do
       modname = 'rsynclocal'
       source = "puppet:///modules/selinux/#{modname}"
       modules_dir = '/var/lib/puppet/selinux'
+      let(:parser) {'future' }
       let(:title) { modname }
       let(:params) {{
         :source      => source,
@@ -76,7 +77,7 @@ describe 'selinux::module', :type => :define do
           :osfamily      => 'RedHat',
           :operatingsystemrelease => osrelease,
       } }
-      if osrelease.to_f < 7
+      if osrelease < '7'
         it { should create_package('selinux-policy') }
       else
         it { should create_package('selinux-policy-devel') }
